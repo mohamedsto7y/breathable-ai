@@ -1,0 +1,98 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>pending</title></head><body>
+<textarea id="ta"></textarea>
+<div id="ce" contenteditable="true"></div>
+<div id="plain">please take a deep breath before reading this article</div>
+<pre id="out"></pre>
+<script>
+// ---- stub the extension APIs before content.js loads ----
+const params = new URLSearchParams(location.search);
+const storedEnabled = params.get('enabled');
+const failFetch = params.get('fetchfail') === '1';
+const EXT_URL = 'chrome-extension://testid/breath.mp3';
+let plays = 0;
+
+window.Audio = class {
+  constructor() { this.currentTime = 0; this.src = ''; }
+  set preload(v) {} load() {} pause() {}
+  addEventListener() {} removeEventListener() {}
+  play() { plays++; return Promise.resolve(); }
+};
+globalThis.URL = Object.assign(Object.create(URL), URL, {
+  createObjectURL: () => 'blob:stubbed-object-url'
+});
+globalThis.fetch = (url) => failFetch
+  ? Promise.reject(new TypeError('blocked'))
+  : Promise.resolve({ ok: true, blob: () => Promise.resolve({ size: 163004, __fake: 'blob' }) });
+
+globalThis.chrome = {
+  runtime: { getURL: (p) => EXT_URL },
+  storage: {
+    local: { get: (k, cb) => cb(storedEnabled === null ? {} : { enabled: storedEnabled === 'true' }),
+             set: () => {} },
+    onChanged: { addListener: () => {} }
+  }
+};
+if (params.get('swallow') === '1') {
+  document.addEventListener('keydown', (e) => e.stopPropagation(), true);
+}
+</script>
+<script src="../../content.js"></script>
+<script>
+const results = [];
+function dispatch(target, opts) {
+  target.dispatchEvent(new KeyboardEvent('keydown',
+    Object.assign({ key: 'Enter', bubbles: true, cancelable: true }, opts)));
+}
+function fire(target, opts) {
+  plays = 0;
+  lastPlayed = 0; // isolate each case from the 300ms duplicate-trigger guard
+  dispatch(target, opts);
+  return plays;
+}
+function check(name, got, want) {
+  results.push((got === want ? 'PASS ' : 'FAIL ') + name + '  (got=' + JSON.stringify(got) +
+               ' want=' + JSON.stringify(want) + ')');
+}
+const ta = document.getElementById('ta'), ce = document.getElementById('ce'),
+      plain = document.getElementById('plain');
+const only = params.get('only');
+
+// setTimeout so the fetch -> blob -> src assignment in content.js has settled
+setTimeout(() => {
+  if (only === 'disabled') {
+    ta.value = 'take a deep breath';
+    check('toggle off suppresses playback', fire(ta), 0);
+  } else if (only === 'swallow') {
+    ta.value = 'take a deep breath';
+    check('fires despite page stopPropagation', fire(ta), 1);
+  } else if (only === 'debounce') {
+    ta.value = 'take a deep breath';
+    plays = 0; lastPlayed = 0;
+    dispatch(ta); dispatch(ta); dispatch(ta);
+    check('three instant keydowns collapse to one play', plays, 1);
+    lastPlayed = 0;
+    dispatch(ta);
+    check('a later keydown still replays', plays, 2);
+  } else if (only === 'source') {
+    check('audio src is a blob URL, not the extension URL', audio.src, 'blob:stubbed-object-url');
+  } else if (only === 'fallback') {
+    check('falls back to the extension URL when fetch is blocked', audio.src, EXT_URL);
+    ta.value = 'take a deep breath';
+    check('still plays via the fallback source', fire(ta), 1);
+  } else {
+    ta.value = 'take a deep breath';           check('textarea, plain Enter', fire(ta), 1);
+    ta.value = 'take a deep breath';           check('Shift+Enter does not fire', fire(ta, {shiftKey:true}), 0);
+    ta.value = 'Please TAKE A DEEP BREATH ok'; check('case-insensitive substring', fire(ta), 1);
+    ta.value = 'take   a  deep\nbreath';       check('flexible whitespace', fire(ta), 1);
+    ta.value = 'take a deep breath';           check('IME composition ignored', fire(ta, {isComposing:true}), 0);
+    ta.value = 'take a deep breath';           check('non-Enter key ignored', fire(ta, {key:'a'}), 0);
+    ta.value = 'hello there';                  check('unrelated text ignored', fire(ta), 0);
+    ce.textContent = 'take a deep breath';     check('contenteditable composer', fire(ce), 1);
+    ta.value = 'take a deep breath';           check('auto-repeat keydown ignored', fire(ta, {repeat:true}), 0);
+    check('page text is not scanned', fire(plain), 0);
+    check('body/document target ignored', fire(document.body), 0);
+  }
+  document.getElementById('out').textContent = results.join('\n');
+  document.title = results.every(r => r.startsWith('PASS')) ? 'ALLPASS' : 'HASFAIL';
+}, 0);
+</script></body></html>

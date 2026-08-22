@@ -1,0 +1,3 @@
+dist/
+*.bak
+tools/__pycache__/

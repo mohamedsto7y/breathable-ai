@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Breathable AI</title>
+  <style>
+    :root { --bg: #fff; --fg: #111; --muted: #666; --on: #1d9e75; --off: #8a8a8a; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1e1e1e; --fg: #f2f2f2; --muted: #9a9a9a; --on: #23b585; --off: #5a5a5a; }
+    }
+    body {
+      width: 220px; margin: 0; padding: 16px; text-align: center;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg); color: var(--fg);
+    }
+    h1 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
+    .slogan { margin: 0 0 12px; font-size: 9.5px; font-weight: 800; letter-spacing: 1.6px;
+              text-transform: uppercase; color: var(--on); }
+    button {
+      width: 100%; padding: 10px; font-size: 14px; font-weight: 600;
+      border: none; border-radius: 8px; cursor: pointer; color: #fff;
+      transition: background .15s ease;
+    }
+    button:disabled { cursor: default; opacity: .6; }
+    button:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+    .on { background: var(--on); }
+    .off { background: var(--off); }
+    p { font-size: 12px; line-height: 1.45; color: var(--muted); margin: 10px 0 0; }
+  </style>
+</head>
+<body>
+  <h1>Breathable AI</h1>
+  <p class="slogan">Make AI human again!</p>
+  <button id="toggle" type="button" aria-pressed="true" disabled>…</button>
+  <p>Type &ldquo;take a deep breath&rdquo; in an AI chat and press Enter.</p>
+  <script src="popup.js"></script>
+</body>
+</html>

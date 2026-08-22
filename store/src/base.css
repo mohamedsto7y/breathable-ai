@@ -1,0 +1,39 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+  font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: #0f2b22;
+  background: radial-gradient(120% 100% at 50% 0%, #eefaf4 0%, #dff3ea 45%, #cfeade 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  -webkit-font-smoothing: antialiased;
+}
+.frame { display: flex; flex-direction: column; align-items: center; justify-content: center;
+         width: 100%; height: 100%; padding: 64px; text-align: center; }
+h1 { font-size: 54px; line-height: 1.14; font-weight: 700; letter-spacing: -1.4px; }
+h1 .dim { color: #4d7a6b; font-weight: 600; }
+.sub { margin-top: 20px; font-size: 22px; line-height: 1.5; color: #47705f; max-width: 780px; }
+.brand { position: absolute; left: 40px; bottom: 34px; display: flex; align-items: center; gap: 12px; }
+.brand img { width: 34px; height: 34px; border-radius: 8px; }
+.brand span { font-size: 19px; font-weight: 600; color: #2c5849; }
+
+/* chat composer mock */
+.composer {
+  width: 760px; background: #fff; border-radius: 18px; padding: 20px 20px 20px 26px;
+  display: flex; align-items: center; gap: 16px;
+  box-shadow: 0 24px 60px rgba(12,58,44,.16), 0 2px 6px rgba(12,58,44,.08);
+  border: 1px solid rgba(20,90,70,.09);
+}
+.composer .text { font-size: 25px; color: #16241f; letter-spacing: -.2px; text-align: left; flex: 1; }
+.caret { display: inline-block; width: 2px; height: 27px; background: #1d9e75;
+         vertical-align: -6px; margin-left: 3px; }
+.send { width: 46px; height: 46px; border-radius: 50%; flex: none;
+        background: linear-gradient(#24ac80, #17855f); display: flex;
+        align-items: center; justify-content: center; }
+.send svg { width: 22px; height: 22px; }
+.key { display: inline-flex; align-items: center; justify-content: center; min-width: 62px;
+       height: 38px; padding: 0 14px; border-radius: 9px; background: #fff; font-size: 16px;
+       font-weight: 600; color: #2c5849; border: 1px solid rgba(20,90,70,.18);
+       box-shadow: 0 3px 0 rgba(20,90,70,.13); }
+
+.kicker { font-size: 17px; font-weight: 800; letter-spacing: 3.4px;
+          text-transform: uppercase; color: #1d9e75; margin-bottom: 22px; }
