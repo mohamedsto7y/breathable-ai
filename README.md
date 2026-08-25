@@ -1,5 +1,7 @@
 # Breathable AI
 
+**[Install from the Chrome Web Store](https://chromewebstore.google.com/detail/breathable-ai/jflnamibokeipdcidnfnjejfelnlhpgc)**
+
 A novelty Chrome/Firefox extension. Type **"take a deep breath"** into an AI chat box,
 press Enter, and you hear a real human breath.
 
@@ -7,6 +9,8 @@ The running joke: the famous prompt tells the *model* to take a deep breath. Thi
 the *user* take one instead.
 
 ## Install (unpacked, for development)
+
+The published build is on the Chrome Web Store, linked above. To run the working copy:
 
 **Chrome / Edge / Brave / Opera**
 1. Go to `chrome://extensions`
@@ -68,7 +72,8 @@ mistake — breaks on Firefox specifically.
 | Browser | Status |
 |---|---|
 | Chrome 88+ | Supported |
-| Edge / Brave / Opera | Supported (Chromium) |
+| Edge | Verified working, installed from the Chrome Web Store |
+| Brave / Opera / Vivaldi | Chromium; install from the Chrome Web Store |
 | Firefox 109+ | Supported via `browser_specific_settings.gecko` |
 | Safari 16.4+ | Code is compatible; still needs `xcrun safari-web-extension-converter` |
 
@@ -120,6 +125,9 @@ unmodified `content.js` at `document_start` over the Chrome DevTools Protocol wi
 - `audio.src` resolved to a `blob:` URL, `readyState` 4, **no CSP violations**
 - `play()` resolved and `currentTime` advanced to ~2.6 s
 - Shift+Enter stayed silent
+
+Microsoft Edge was confirmed working by installing the published build from the Chrome
+Web Store, so the Chromium path is demonstrated rather than assumed.
 
 Not yet verified: the extension has never been installed as a real unpacked extension,
 because Chrome 151 refuses to load unpacked extensions in a session with

@@ -47,14 +47,6 @@ message, so you can write multi-line prompts without setting it off. The phrase 
 matched case-insensitively and can sit anywhere in the message, so "ok take a deep breath
 and rewrite this properly" works exactly as well.
 
-WHERE IT WORKS
-
-ChatGPT, Claude, Gemini, Google AI Studio, Microsoft Copilot, Perplexity, Grok, DeepSeek,
-Mistral, Poe, HuggingChat, Qwen, and Meta AI.
-
-The extension asks for access to those sites and nothing else. It cannot see the rest of
-your browsing, because it was never granted it.
-
 ONE SETTING
 
 Click the toolbar icon and you get a single On/Off button. It is on by default. Turn it
@@ -63,6 +55,8 @@ because there is nothing else.
 
 PRIVACY
 
+- It runs only inside AI chat interfaces. Chrome shows you the exact list of sites on
+  the install prompt, and it cannot see any other tab you open.
 - No network requests. The sound file is bundled inside the extension.
 - Your messages are never read, stored, or transmitted. The text of the box you are
   typing in is tested against one pattern in local memory and immediately forgotten.
@@ -119,7 +113,7 @@ somewhere public (a GitHub repo file or GitHub Pages URL is accepted) and paste 
 | Store icon | 128 x 128 | `../icons/icon128.png` | Ready |
 | Screenshot 1 | 1280 x 800 | `screenshot-1-the-moment.png` | Ready |
 | Screenshot 2 | 1280 x 800 | `screenshot-2-popup.png` | Ready |
-| Screenshot 3 | 1280 x 800 | `screenshot-3-sites.png` | Ready |
+| Screenshot 3 | 1280 x 800 | `screenshot-3-privacy.png` | Ready |
 | Screenshot 4 | 1280 x 800 | `screenshot-4-how-it-works.png` | Ready |
 | Small promo tile | 440 x 280 | `promo-tile-small-440x280.png` | Ready (optional; needed to be featured) |
 | Marquee promo tile | 1400 x 560 | `promo-marquee-1400x560.png` | Ready (optional) |
