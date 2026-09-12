@@ -129,9 +129,19 @@ unmodified `content.js` at `document_start` over the Chrome DevTools Protocol wi
 Microsoft Edge was confirmed working by installing the published build from the Chrome
 Web Store, so the Chromium path is demonstrated rather than assumed.
 
-Not yet verified: the extension has never been installed as a real unpacked extension,
-because Chrome 151 refuses to load unpacked extensions in a session with
-`--remote-debugging-port` active (both `--load-extension` and `Extensions.loadUnpacked`
-report success and silently install nothing). The manifest match patterns and the popup's
-real `chrome.storage` wiring therefore still need one manual pass via
-`chrome://extensions` → Load unpacked.
+### Published build, tested live (12 September 2026)
+
+The package served by the Chrome Web Store was downloaded and compared with this repo:
+the code is byte-identical, differing only by the `update_url` the store inserts. That
+build was then installed as a real extension in Edge (which, unlike Chrome, still loads
+extensions in a DevTools-driven session) and exercised with real Enter keypresses:
+
+| Site | Result |
+|---|---|
+| ChatGPT, Gemini, Perplexity, Grok, Qwen | Phrase detected, breath played |
+| Mistral | Breath plays. Its `media-src 'self' data:` blocks `blob:`, so the direct `chrome-extension://` fallback is used, and it plays |
+| Claude, DeepSeek, Poe, Meta AI, HuggingChat, AI Studio | Extension injects and the sound loads; the chat box sits behind a sign-in, so Enter was not exercised |
+| Copilot, in Edge only | Edge blocks every extension on its own Copilot page; nothing to fix here |
+
+Every site's redirects land inside the manifest's match patterns. Chrome itself was also
+confirmed working by hand, via Load unpacked.
