@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Breathable AI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Type \"take a deep breath\" in an AI chat and hear a real human breath. The prompt tells the model to relax; this one is for you.",
   "content_scripts": [
     {

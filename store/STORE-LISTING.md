@@ -139,7 +139,10 @@ temp path and copy the file back.
    below.
 2. Register as a Chrome Web Store developer (one-off 5 USD fee) if you have not already.
 3. Host the privacy policy at a public URL and paste the link into the dashboard.
-4. Upload `dist/breathable-ai-1.0.0.zip`.
+4. Upload the zip that `python tools/build.py` writes to `dist/` (currently
+   `dist/breathable-ai-1.0.1.zip`, 161 KB). Never zip the project folder yourself:
+   version 1.0.0 was published that way and shipped 1.9 MB of tools, store art and an
+   old build to every user.
 5. Expect a few days for review. A narrow host-permission list like this one usually
    clears faster than a `<all_urls>` extension, which is why the manifest was scoped down.
 

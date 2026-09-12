@@ -124,3 +124,6 @@ if __name__ == "__main__":
     kb = out.stat().st_size / 1024
     print(f"\nvalidated {len(PAYLOAD)} files, {len(manifest['content_scripts'][0]['matches'])} host matches")
     print(f"wrote {out.relative_to(ROOT)}  ({kb:.1f} KB)")
+    print()
+    print("Upload exactly this file to the store dashboard. Never zip the project folder")
+    print("yourself: that ships tools/, store art and old builds to every user.")
